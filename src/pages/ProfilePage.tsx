@@ -16,7 +16,7 @@ export default function ProfilePage() {
       <PageHero
         breadcrumb={[{ label: 'Beranda', to: ROUTES.home }, { label: 'Profil sekolah' }]}
         title="Profil sekolah"
-        description={`Sejarah, identitas, visi dan misi, guru, serta fasilitas ${SITE.name}.`}
+        description={`Sejarah, identitas, visi dan misi, guru, serta sarana dan prasarana ${SITE.name}.`}
       />
       <SectionNav sections={PROFILE_SECTIONS} label="Bagian profil" />
       <HistorySection />

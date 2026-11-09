@@ -1,9 +1,9 @@
 export const SITE = {
-  name: 'SDN 1 Bowongso',
+  name: 'SDN 1 Kembaran',
   type: 'Sekolah Dasar Negeri',
   tagline: 'Belajar ceria, tumbuh cerdas, dan berkarakter.',
   description:
-    'Sekolah dasar negeri yang ramah anak, dengan Kurikulum Merdeka dan guru yang mendampingi tiap murid.',
+    'Sekolah dasar negeri di Desa Kembaran, Kecamatan Kalikajar, Kabupaten Wonosobo. Ramah anak, berkurikulum merdeka, dengan guru yang mendampingi tiap murid.',
 } as const
 
 export const PPDB = {
@@ -16,9 +16,21 @@ export const PPDB = {
  * sesuai desain, sengaja tidak diisi data karangan.
  */
 export const CONTACT = {
-  address: '[Alamat lengkap SDN 1 Bowongso]',
+  address: '[Alamat lengkap], Desa Kembaran, Kec. Kalikajar, Kab. Wonosobo, Jawa Tengah',
   phone: '[Nomor telepon / WhatsApp sekolah]',
   email: '[Email sekolah]',
+} as const
+
+/**
+ * Peta lokasi sekolah (halaman Kontak). Selama `placeUrl` dan `embedUrl` kosong, peta dicari lewat
+ * `query` (nama sekolah + wilayah). TODO: untuk titik yang tepat, buka sekolah di Google Maps lalu:
+ * - `placeUrl`: tempel tautan dari Bagikan > Salin link (mis. https://maps.app.goo.gl/...).
+ * - `embedUrl`: tempel nilai `src` dari Bagikan > Sematkan peta (https://www.google.com/maps/embed?pb=...).
+ */
+export const MAP = {
+  query: 'SD Negeri 1 Kembaran, Kalikajar, Wonosobo, Jawa Tengah',
+  placeUrl: '',
+  embedUrl: '',
 } as const
 
 /**

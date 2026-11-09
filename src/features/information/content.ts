@@ -6,7 +6,7 @@ import type { DownloadFile, GalleryPhoto } from './types'
 
 /**
  * Foto sementara dari Unsplash untuk dokumentasi dan galeri sekolah.
- * Ganti dengan foto asli kegiatan SDN 1 Bowongso saat aset resmi tersedia.
+ * Ganti dengan foto asli kegiatan SDN 1 Kembaran saat aset resmi tersedia.
  * Berita dan agenda memakai `LATEST_NEWS` dan `UPCOMING_AGENDA` dari features/home/content.ts
  * agar Beranda dan halaman Informasi selalu sama.
  */

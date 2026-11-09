@@ -54,13 +54,26 @@ export function AdminLoginForm() {
 
       {DEMO_ENABLED && (
         <div className="mb-5 border-l-4 border-accent bg-surface p-3.5 text-[15px]">
-          <p className="font-bold">Mode demo</p>
+          <p className="font-bold">Akun demo sementara</p>
           <p>
-            Email: <code>{DEMO_CREDENTIALS.email}</code>
+            Email: <code className="break-all">{DEMO_CREDENTIALS.email}</code>
           </p>
           <p>
             Kata sandi: <code>{DEMO_CREDENTIALS.password}</code>
           </p>
+          <p className="mt-1 text-muted">Hanya untuk mencoba tampilan. Datanya contoh.</p>
+          <button
+            type="button"
+            onClick={() => {
+              setEmail(DEMO_CREDENTIALS.email)
+              setPassword(DEMO_CREDENTIALS.password)
+              setErrors({})
+              setFailure(undefined)
+            }}
+            className="mt-2 font-bold underline underline-offset-4 hover:no-underline"
+          >
+            Isi otomatis
+          </button>
         </div>
       )}
 

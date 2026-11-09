@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { ROUTES } from '@/config/navigation'
+import { RESOURCES } from '@/features/admin/resources'
 import ComingSoonPage from '@/pages/ComingSoonPage'
 import HomePage from '@/pages/HomePage'
 
@@ -57,6 +58,14 @@ export const router = createBrowserRouter([
         index: true,
         lazy: async () => ({ Component: (await import('@/pages/AdminDashboardPage')).default }),
       },
+      // Modul konten admin (Berita, Pengumuman, Agenda, Galeri, Guru, PPDB): satu halaman, satu definisi.
+      ...RESOURCES.map((def) => ({
+        path: `${def.path}/*`,
+        lazy: async () => {
+          const { default: AdminResourcePage } = await import('@/pages/AdminResourcePage')
+          return { Component: () => <AdminResourcePage def={def} /> }
+        },
+      })),
       {
         path: '*',
         lazy: async () => ({ Component: (await import('@/pages/AdminComingSoonPage')).default }),

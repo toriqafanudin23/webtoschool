@@ -18,7 +18,7 @@ export const ACADEMIC_SECTIONS: readonly SectionLink[] = [
 ]
 
 export const CURRICULUM_STATEMENT =
-  'SDN 1 Bowongso memakai Kurikulum Merdeka: pembelajaran berdiferensiasi yang memberi ruang bagi minat dan bakat setiap murid.'
+  'SDN 1 Kembaran memakai Kurikulum Merdeka: pembelajaran berdiferensiasi yang memberi ruang bagi minat dan bakat setiap murid.'
 
 export const CURRICULUM_PHASES: readonly KeyValue[] = [
   { label: 'Fase A', value: 'Kelas 1 dan 2' },

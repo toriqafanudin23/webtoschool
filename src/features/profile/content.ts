@@ -1,12 +1,27 @@
+import {
+  BookOpen,
+  Dumbbell,
+  Flag,
+  HeartPulse,
+  Landmark,
+  Library,
+  Laptop,
+  School,
+  Shapes,
+  Droplets,
+  Users,
+  Utensils,
+  Volleyball,
+} from 'lucide-react'
 import type { ChipOption } from '@/components/ui/FilterChips'
 import type { KeyValue } from '@/components/ui/KeyValueList'
 import type { SectionLink } from '@/components/ui/SectionNav'
 import { unsplashImage } from '@/lib/unsplash'
-import type { Facility, StaffCategory, StaffMember } from './types'
+import type { FacilityGroup, StaffCategory, StaffMember } from './types'
 
 /**
  * Foto sementara dari Unsplash untuk melengkapi tampilan website.
- * Ganti dengan foto dan data resmi SDN 1 Bowongso saat aset asli tersedia.
+ * Ganti dengan foto dan data resmi SDN 1 Kembaran saat aset asli tersedia.
  */
 
 /** Urutan di sini = urutan section di halaman = urutan tautan sub-menu. */
@@ -15,11 +30,11 @@ export const PROFILE_SECTIONS: readonly SectionLink[] = [
   { id: 'identitas', label: 'Identitas' },
   { id: 'visi-misi', label: 'Visi dan misi' },
   { id: 'guru-tendik', label: 'Guru dan tendik', shortLabel: 'Guru' },
-  { id: 'fasilitas', label: 'Fasilitas' },
+  { id: 'fasilitas', label: 'Sarana dan prasarana', shortLabel: 'Sarpras' },
 ]
 
 export const HISTORY_STATEMENT =
-  '[Tuliskan sejarah berdirinya SDN 1 Bowongso: tahun berdiri, latar belakang, dan tonggak penting.]'
+  '[Tuliskan sejarah berdirinya SDN 1 Kembaran, Desa Kembaran, Kecamatan Kalikajar: tahun berdiri, latar belakang, dan tonggak penting.]'
 
 export const HISTORY_PHOTO = {
   ...unsplashImage({
@@ -27,7 +42,7 @@ export const HISTORY_PHOTO = {
     width: 960,
     widths: [480, 640, 960, 1280],
   }),
-  alt: 'Gedung dan lingkungan sekolah SDN 1 Bowongso',
+  alt: 'Gedung dan lingkungan sekolah SDN 1 Kembaran',
 } as const
 
 /** Hanya tampil di layar md ke atas (sesuai desain, ponsel menampilkan pernyataan dan foto saja). */
@@ -37,17 +52,22 @@ export const HISTORY_TIMELINE: readonly KeyValue[] = [
   { label: '[Tahun]', value: 'Prestasi membanggakan' },
 ]
 
+/** TODO: ganti dengan nama resmi; dipakai di Identitas, daftar guru, dan sambutan di Beranda. */
+export const HEADMASTER_NAME = '[Nama Kepala Sekolah]'
+
 export const SCHOOL_IDENTITY: readonly KeyValue[] = [
-  { label: 'Nama sekolah', value: 'SDN 1 Bowongso' },
-  { label: 'NPSN', value: '[NPSN]' },
+  { label: 'Nama sekolah', value: 'SDN 1 Kembaran' },
+  { label: 'NPSN', value: '20307275' },
   { label: 'Status', value: 'Negeri' },
-  { label: 'Akreditasi', value: '[ A ]' },
+  { label: 'Akreditasi', value: '[Akreditasi]' },
   { label: 'Kurikulum', value: 'Kurikulum Merdeka' },
-  { label: 'Alamat', value: '[Alamat sekolah]' },
-  { label: 'Kepala sekolah', value: '[Nama Kepala Sekolah]' },
+  { label: 'Alamat', value: '[Alamat lengkap], Desa Kembaran' },
+  { label: 'Kecamatan', value: 'Kalikajar' },
+  { label: 'Kabupaten', value: 'Wonosobo, Jawa Tengah' },
+  { label: 'Kepala sekolah', value: HEADMASTER_NAME },
 ]
 
-export const VISION = '[Tuliskan visi SDN 1 Bowongso di sini.]'
+export const VISION = '[Tuliskan visi SDN 1 Kembaran di sini.]'
 
 export const MISSIONS: readonly KeyValue[] = [
   { label: 'Misi 1', value: '[Misi pertama sekolah.]' },
@@ -68,7 +88,7 @@ export const STAFF_FILTERS: readonly ChipOption<StaffFilter>[] = [
 export const STAFF: readonly StaffMember[] = [
   {
     id: 'kepala-sekolah',
-    name: '[Nama Kepala Sekolah]',
+    name: HEADMASTER_NAME,
     role: 'Kepala sekolah',
     category: 'kepala-sekolah',
     photo: {
@@ -77,7 +97,7 @@ export const STAFF: readonly StaffMember[] = [
         width: 400,
         widths: [200, 400, 600],
       }),
-      alt: 'Kepala Sekolah SDN 1 Bowongso',
+      alt: 'Kepala Sekolah SDN 1 Kembaran',
     },
   },
   {
@@ -91,7 +111,7 @@ export const STAFF: readonly StaffMember[] = [
         width: 400,
         widths: [200, 400, 600],
       }),
-      alt: 'Guru Kelas SDN 1 Bowongso',
+      alt: 'Guru Kelas SDN 1 Kembaran',
     },
   },
   {
@@ -105,7 +125,7 @@ export const STAFF: readonly StaffMember[] = [
         width: 400,
         widths: [200, 400, 600],
       }),
-      alt: 'Guru Mata Pelajaran SDN 1 Bowongso',
+      alt: 'Guru Mata Pelajaran SDN 1 Kembaran',
     },
   },
   {
@@ -119,54 +139,109 @@ export const STAFF: readonly StaffMember[] = [
         width: 400,
         widths: [200, 400, 600],
       }),
-      alt: 'Tenaga Kependidikan SDN 1 Bowongso',
+      alt: 'Tenaga Kependidikan SDN 1 Kembaran',
     },
   },
 ]
 
-export const FACILITIES: readonly Facility[] = [
+/**
+ * Foto sarana dan prasarana: simpan berkas di `public/fasilitas/<kode>.jpg` (nama berkas
+ * ada di `public/fasilitas/README.txt`). Selama berkas belum ada, kartu menampilkan ikon.
+ */
+const facilityPhoto = (slug: string, alt: string) => ({ src: `/fasilitas/${slug}.jpg`, alt })
+
+/**
+ * TODO: sesuaikan dengan kondisi sebenarnya. Daftar ini adalah daftar umum sekolah dasar:
+ * HAPUS yang tidak dimiliki SDN 1 Kembaran dan tambahkan yang belum ada. Keterangan sengaja
+ * umum (tanpa jumlah atau ukuran); tambahkan angka hanya bila datanya resmi.
+ */
+export const FACILITY_GROUPS: readonly FacilityGroup[] = [
   {
-    name: 'Ruang kelas',
-    photo: {
-      ...unsplashImage({
-        id: 'photo-1510531704581-5b2870972060',
-        width: 600,
-        widths: [300, 600, 900],
-      }),
-      alt: 'Ruang kelas belajar mengajar yang rapi dan nyaman',
-    },
+    title: 'Prasarana',
+    items: [
+      {
+        name: 'Ruang kelas',
+        description: 'Ruang belajar untuk kelas 1 sampai 6.',
+        icon: School,
+        photo: facilityPhoto('ruang-kelas', 'Ruang kelas SDN 1 Kembaran'),
+      },
+      {
+        name: 'Perpustakaan',
+        description: 'Tempat membaca dan meminjam buku untuk murid.',
+        icon: Library,
+        photo: facilityPhoto('perpustakaan', 'Perpustakaan SDN 1 Kembaran'),
+      },
+      {
+        name: 'Mushola',
+        description: 'Tempat ibadah dan pembiasaan salat bagi warga sekolah.',
+        icon: Landmark,
+        photo: facilityPhoto('mushola', 'Mushola SDN 1 Kembaran'),
+      },
+      {
+        name: 'Lapangan voli',
+        description: 'Untuk olahraga, latihan, dan kegiatan bersama.',
+        icon: Volleyball,
+        photo: facilityPhoto('lapangan-voli', 'Lapangan voli SDN 1 Kembaran'),
+      },
+      {
+        name: 'Lapangan upacara',
+        description: 'Tempat upacara bendera dan kegiatan di halaman.',
+        icon: Flag,
+        photo: facilityPhoto('lapangan-upacara', 'Lapangan upacara SDN 1 Kembaran'),
+      },
+      {
+        name: 'UKS',
+        description: 'Unit Kesehatan Sekolah untuk pertolongan pertama.',
+        icon: HeartPulse,
+        photo: facilityPhoto('uks', 'UKS SDN 1 Kembaran'),
+      },
+      {
+        name: 'Ruang guru dan kepala sekolah',
+        description: 'Pusat administrasi dan layanan sekolah.',
+        icon: Users,
+        photo: facilityPhoto('ruang-guru', 'Ruang guru dan kepala sekolah SDN 1 Kembaran'),
+      },
+      {
+        name: 'Kantin sekolah',
+        description: 'Tempat murid jajan dan makan saat istirahat.',
+        icon: Utensils,
+        photo: facilityPhoto('kantin', 'Kantin sekolah SDN 1 Kembaran'),
+      },
+      {
+        name: 'Toilet dan tempat cuci tangan',
+        description: 'Sanitasi dan air bersih untuk murid dan guru.',
+        icon: Droplets,
+        photo: facilityPhoto('toilet', 'Toilet dan tempat cuci tangan SDN 1 Kembaran'),
+      },
+    ],
   },
   {
-    name: 'Perpustakaan',
-    photo: {
-      ...unsplashImage({
-        id: 'photo-1481627834876-b7833e8f5570',
-        width: 600,
-        widths: [300, 600, 900],
-      }),
-      alt: 'Perpustakaan sekolah dengan berbagai buku bacaan dan literatur',
-    },
-  },
-  {
-    name: 'Lapangan',
-    photo: {
-      ...unsplashImage({
-        id: 'photo-1527410514447-0d41efed395f',
-        width: 600,
-        widths: [300, 600, 900],
-      }),
-      alt: 'Lapangan olahraga dan upacara bendera sekolah',
-    },
-  },
-  {
-    name: 'UKS',
-    photo: {
-      ...unsplashImage({
-        id: 'photo-1519494026892-80bbd2d6fd0d',
-        width: 600,
-        widths: [300, 600, 900],
-      }),
-      alt: 'Ruang Unit Kesehatan Sekolah (UKS) untuk pertolongan pertama',
-    },
+    title: 'Sarana',
+    items: [
+      {
+        name: 'Buku dan bahan bacaan',
+        description: 'Buku pelajaran dan bacaan penunjang literasi.',
+        icon: BookOpen,
+        photo: facilityPhoto('buku-bacaan', 'Buku dan bahan bacaan SDN 1 Kembaran'),
+      },
+      {
+        name: 'Alat olahraga',
+        description: 'Perlengkapan pendidikan jasmani dan kegiatan olahraga.',
+        icon: Dumbbell,
+        photo: facilityPhoto('alat-olahraga', 'Alat olahraga SDN 1 Kembaran'),
+      },
+      {
+        name: 'Alat peraga',
+        description: 'Media belajar untuk membantu murid memahami pelajaran.',
+        icon: Shapes,
+        photo: facilityPhoto('alat-peraga', 'Alat peraga SDN 1 Kembaran'),
+      },
+      {
+        name: 'Perangkat TIK',
+        description: 'Perangkat teknologi pendukung pembelajaran.',
+        icon: Laptop,
+        photo: facilityPhoto('perangkat-tik', 'Perangkat TIK SDN 1 Kembaran'),
+      },
+    ],
   },
 ]

@@ -2,12 +2,13 @@ import { ADMIN_API_URL } from '@/config/site'
 import { ServiceUnavailableError } from '@/lib/errors'
 import {
   DEMO_CREDENTIALS,
-  DEMO_DASHBOARD,
   DEMO_ENABLED,
   endDemoSession,
   isDemoSignedIn,
   startDemoSession,
 } from './demo'
+import { demoDashboard, demoList, demoRemove, demoSave, demoSetAdmission } from './demoStore'
+import type { Item, ResourceDef } from './resources'
 
 export interface Credentials {
   email: string
@@ -71,7 +72,7 @@ export interface DashboardData {
   activity: readonly { admin: string; action: string }[]
 }
 
-async function adminRequest(path: string, init?: RequestInit): Promise<Response> {
+export async function adminRequest(path: string, init?: RequestInit): Promise<Response> {
   if (!ADMIN_API_URL) throw new ServiceUnavailableError()
   try {
     return await fetch(`${ADMIN_API_URL}${path}`, { credentials: 'include', ...init })
@@ -101,7 +102,7 @@ export async function signOut(): Promise<void> {
 
 /** GET {ADMIN_API_URL}/dashboard -> DashboardData. */
 export async function fetchDashboard(): Promise<DashboardData> {
-  if (DEMO_ENABLED) return DEMO_DASHBOARD
+  if (DEMO_ENABLED) return demoDashboard()
   const response = await adminRequest('/dashboard')
   if (!response.ok) throw new ServiceUnavailableError()
   return (await response.json()) as DashboardData
@@ -109,11 +110,37 @@ export async function fetchDashboard(): Promise<DashboardData> {
 
 /** PATCH {ADMIN_API_URL}/admission { open: boolean } -> 2xx. */
 export async function setAdmissionOpen(open: boolean): Promise<void> {
-  if (DEMO_ENABLED) return
+  if (DEMO_ENABLED) return demoSetAdmission(open)
   const response = await adminRequest('/admission', {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ open }),
   })
+  if (!response.ok) throw new ServiceUnavailableError()
+}
+
+/** GET {ADMIN_API_URL}/{key} -> Item[]. */
+export async function listItems(def: ResourceDef): Promise<Item[]> {
+  if (DEMO_ENABLED) return demoList(def)
+  const response = await adminRequest(`/${def.key}`)
+  if (!response.ok) throw new ServiceUnavailableError()
+  return (await response.json()) as Item[]
+}
+
+/** Baru: POST {ADMIN_API_URL}/{key} (JSON, tanpa `id`) -> Item. Ubah: PUT {ADMIN_API_URL}/{key}/{id}. */
+export async function saveItem(def: ResourceDef, item: Item, isNew: boolean): Promise<void> {
+  if (DEMO_ENABLED) return demoSave(def, item, isNew)
+  const response = await adminRequest(isNew ? `/${def.key}` : `/${def.key}/${item.id}`, {
+    method: isNew ? 'POST' : 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(item),
+  })
+  if (!response.ok) throw new ServiceUnavailableError()
+}
+
+/** DELETE {ADMIN_API_URL}/{key}/{id} -> 2xx. */
+export async function deleteItem(def: ResourceDef, id: string): Promise<void> {
+  if (DEMO_ENABLED) return demoRemove(def, id)
+  const response = await adminRequest(`/${def.key}/${id}`, { method: 'DELETE' })
   if (!response.ok) throw new ServiceUnavailableError()
 }

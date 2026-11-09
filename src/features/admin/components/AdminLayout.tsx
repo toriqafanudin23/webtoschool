@@ -65,7 +65,7 @@ export function AdminLayout() {
 
         {session.isDemo && (
           <p role="status" className="bg-accent px-5 py-2 text-sm font-semibold text-ink lg:px-10">
-            Mode demo: data di panel ini hanya contoh dan belum terhubung ke server.
+            Mode demo: data hanya contoh dan tersimpan di browser ini saja. Perubahan belum tampil di website publik dan belum terhubung ke server.
           </p>
         )}
 
